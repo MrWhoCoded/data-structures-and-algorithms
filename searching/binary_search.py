@@ -9,6 +9,23 @@ def binary_search(lst, left, right, n):
             return binary_search(lst, left, mid - 1, n)
     else:
         return -1
+    
+def binary_search_interative(lst, n):
+    left = 0
+    right = len(lst) - 1
+    mid = (left + right) // 2
+    
+    while left <= right:
+        if lst[mid] == n:
+            return mid
+        elif lst[mid] > n:
+            right = mid - 1
+            mid = (left + right)//2
+        elif lst[mid] < n:
+            left = mid + 1
+            mid = (right + left)//2
+            
+    return -1
             
 list1 = [1, 3, 5, 6, 8, 9, 10, 32]
 list2 = [9]
@@ -18,4 +35,4 @@ list5 = []
 lists = [list1, list2, list3, list4, list5]
 
 for i in lists:
-    print(binary_search(i, 0, len(i) - 1, 9))
+    print(binary_search(i, 0, len(i) - 1, 9), binary_search_interative(i, 9))
