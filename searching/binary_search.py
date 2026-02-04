@@ -13,17 +13,15 @@ def binary_search(lst, left, right, n):
 def binary_search_interative(lst, n):
     left = 0
     right = len(lst) - 1
-    mid = (left + right) // 2
     
     while left <= right:
+        mid = (left + right) // 2
         if lst[mid] == n:
             return mid
         elif lst[mid] > n:
             right = mid - 1
-            mid = (left + right)//2
         elif lst[mid] < n:
             left = mid + 1
-            mid = (right + left)//2
             
     return -1
             

@@ -1,49 +1,31 @@
-def merge_sort(lst):
-    n = len(lst)
-    
-    if (n <= 1): 
+def quick_sort(lst, start, end):
+    if end <= start:
         return
     
-    middle = n//2
-    left, right = [], []
+    pivot = partition(lst, start, end)
+    quick_sort(lst, start, pivot - 1)
+    quick_sort(lst, pivot + 1, end)
     
-    for i in range(n):
-        if i < middle:
-            left.append(lst[i])
-        else:
-            right.append(lst[i])
-    #print(middle, left, right)            
-    merge_sort(left)
-    merge_sort(right)
-    merge(left, right, lst)
-    return lst
-    
-def merge(left, right, lst):
-    lsize, rsize = len(left), len(right)
-    l, r, i = 0, 0, 0
-    
-    while(l < lsize and r < rsize):
-        if left[l] <= right[r]:
-            lst[i] = left[l]
+
+def partition(lst, start, end):
+    pivot = lst[end]
+    j = start
+    i = start - 1
+
+    while j <= (end - 1):
+        if lst[j] < pivot:
             i += 1
-            l += 1
-        else:
-            lst[i] = right[r]
-            i += 1
-            r += 1
-            
-    while(l < lsize):
-        lst[i] = left[l]
-        i += 1
-        l += 1
-        
-    while(r < rsize):
-        lst[i] = right[r]
-        i += 1
-        r += 1
-    
+            lst[j], lst[i] = lst[i], lst[j]
+        j += 1
+
+    i += 1
+    lst[i], lst[end] = lst[end], lst[i]
+    return i
+
 #l = [1,3,5,7,2,4,6,8]
-#print(merge_sort(l))
+#quick_sort(l, 0, len(l) - 1)
+#print(l)
+
 
 list1 = [32,10,4,6,99,80,11]
 list2 = [9]
@@ -53,5 +35,5 @@ list5 = []
 lists = [list1, list2, list3, list4, list5]
 
 for i in lists:
-    merge_sort(i)
+    quick_sort(i, 0, len(i) - 1)
     print(i)
