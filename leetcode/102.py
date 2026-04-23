@@ -7,30 +7,34 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
-            
-        queue = []
+
+        queue, stack = [], []
         traversal = []
         queue.append(root)
         
         while queue:
             level = []
 
-            for _ in range(len(queue)):
+            for i in range(len(queue)):
                 curr = queue.pop(0)
                 level.append(curr.val)
-
+                
                 if curr.left:
                     queue.append(curr.left)
+                
                 if curr.right:
                     queue.append(curr.right)
-
-            traversal.append(level)
-        
-        return traversal
+                
+            stack.append(level)
             
+        while stack:
+            traversal.append(stack.pop())
+            
+        return traversal        
+    
 def build_tree(values):
     if not values or values[0] == "null":
         return None
@@ -63,4 +67,5 @@ if __name__ == "__main__":
     root = build_tree(values)
 
     sol = Solution()
-    print("Level Order:", sol.levelOrder(root))
+    print("Reverse Level Order:", sol.levelOrderBottom(root))
+            

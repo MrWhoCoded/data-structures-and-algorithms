@@ -6,15 +6,17 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+        
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
-            
-        queue = []
-        traversal = []
-        queue.append(root)
         
+        traversal = []
+        queue = []
+        queue.append(root)
+        flag = True
+
         while queue:
             level = []
 
@@ -27,10 +29,15 @@ class Solution:
                 if curr.right:
                     queue.append(curr.right)
 
-            traversal.append(level)
-        
-        return traversal
+            if flag:
+                traversal.append(level)
+            else:
+                traversal.append(level[::-1])
             
+            flag = not flag
+
+        return traversal
+    
 def build_tree(values):
     if not values or values[0] == "null":
         return None
@@ -63,4 +70,4 @@ if __name__ == "__main__":
     root = build_tree(values)
 
     sol = Solution()
-    print("Level Order:", sol.levelOrder(root))
+    print("Zigzag Level Order:", sol.zigzagLevelOrder(root))

@@ -6,31 +6,22 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+        
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if not root:
-            return []
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        def sum_path(node, rem_sum):
+            if node is None:
+                return False
+            rem_sum -= node.val
             
-        queue = []
-        traversal = []
-        queue.append(root)
-        
-        while queue:
-            level = []
-
-            for _ in range(len(queue)):
-                curr = queue.pop(0)
-                level.append(curr.val)
-
-                if curr.left:
-                    queue.append(curr.left)
-                if curr.right:
-                    queue.append(curr.right)
-
-            traversal.append(level)
-        
-        return traversal
+            if (rem_sum == 0) and not node.left and not node.right:
+                return True
+            return sum_path(node.left, rem_sum) or sum_path(node.right, rem_sum)
             
+        res = sum_path(root, targetSum)
+        return res
+ 
+
 def build_tree(values):
     if not values or values[0] == "null":
         return None
@@ -63,4 +54,4 @@ if __name__ == "__main__":
     root = build_tree(values)
 
     sol = Solution()
-    print("Level Order:", sol.levelOrder(root))
+    print("Reverse Level Order:", sol.hasPathSum(root, 22))
